@@ -21,8 +21,16 @@ resource "aws_s3_bucket" "logs" {
   force_destroy = true
 }
 
+resource "aws_s3_bucket_ownership_controls" "example" {
+  bucket = aws_s3_bucket.logs.id
+  rule {
+    object_ownership = "BucketOwnerPreferred"
+  }
+}
+
 resource "aws_s3_bucket_acl" "logs" {
-    bucket = aws_s3_bucket_logs_id
+    depends_on = [aws_s3_bucket_ownership_controls.example]
+    bucket = aws_s3_bucket.logs.id
     acl = "log-delivery-write"
 }
 
@@ -106,7 +114,7 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
   }
 
   logging_config {
-    bucket = aws_s3_bucket.logs.bucket_regional_domain_name
+    bucket = aws_s3_bucket.logs.bucket_domain_name
     prefix = "cf-logs/"
   }
 
