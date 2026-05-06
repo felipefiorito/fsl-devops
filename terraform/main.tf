@@ -21,6 +21,11 @@ resource "aws_s3_bucket" "logs" {
   force_destroy = true
 }
 
+resource "aws_s3_bucket_acl" "logs" {
+    bucket = aws_s3_bucket_logs_id
+    acl = "log-delivery-write"
+}
+
 data "aws_iam_policy_document" "app_bucket_policy" {
   statement {
     sid    = "AllowCloudFrontServicePrincipalReadWrite"
