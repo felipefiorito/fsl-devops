@@ -17,4 +17,6 @@ function App() {
   );
 }
 
+var x = 12
+
 export default App;
