@@ -1,10 +1,10 @@
 locals {
-    origin_id = "${var.project_prefix}-s3-origin"
+  origin_id = "${var.project_prefix}-s3-origin"
 }
 
 resource "aws_s3_bucket" "app" {
-    bucket = "${var.project_prefix}-app-bucket"
-    force_destroy = true
+  bucket        = "${var.project_prefix}-app-bucket"
+  force_destroy = true
 }
 
 resource "aws_s3_bucket_public_access_block" "app" {
@@ -17,8 +17,8 @@ resource "aws_s3_bucket_public_access_block" "app" {
 }
 
 resource "aws_s3_bucket" "logs" {
-    bucket = "${var.project_prefix}-logs-bucket"
-    force_destroy = true
+  bucket        = "${var.project_prefix}-logs-bucket"
+  force_destroy = true
 }
 
 data "aws_iam_policy_document" "app_bucket_policy" {
