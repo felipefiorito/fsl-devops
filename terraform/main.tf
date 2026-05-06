@@ -22,7 +22,7 @@ resource "aws_s3_bucket" "logs" {
 }
 
 resource "aws_s3_bucket_acl" "logs" {
-    bucket = aws_s3_bucket_logs_id
+    bucket = aws_s3_bucket.logs.id
     acl = "log-delivery-write"
 }
 
