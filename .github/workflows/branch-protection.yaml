@@ -1,0 +1,31 @@
+name: Validate PR Branch Rules
+
+on:
+  pull_request:
+    branches:
+      - devel
+      - stage
+
+jobs:
+  validate-pr-branches:
+    name: validate-pr-branches
+    runs-on: ubuntu-latest
+    steps:
+      - name: Enforce devel rules
+        if: github.base_ref == 'devel'
+               # branch the PR comes FROM
+        run: |
+          if [[ ! ${{ github.head_ref }} != feature/* && ! ${{ github.head_ref }} != bugfix/*  ]]; then
+            echo "only prs from bufgix/ or feature/ are allowed"
+            exit 1
+          fi
+
+      - name: enforce stage rules
+        if: github.base_ref == 'stage'
+
+        run: |
+          if [[ ! ${{ github.head_ref }} != devel ]]; then
+            echo "only prs from devel are allowed in stage"
+            exit 1
+          fi
+        
