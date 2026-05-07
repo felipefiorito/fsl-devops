@@ -24,7 +24,7 @@ jobs:
         if: github.base_ref == 'stage'
 
         run: |
-          if [[ ! ${{ github.head_ref }} != devel ]]; then
+          if [[ ${{ github.head_ref }} != devel ]]; then
             echo "only prs from devel are allowed in stage"
             exit 1
           fi
